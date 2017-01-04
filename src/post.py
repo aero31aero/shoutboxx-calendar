@@ -23,11 +23,6 @@ class FacebookHandler():
 						break
 					allposts.append(post)
 					print(post['updated_time']+"\t"+post['from']['name'])
-		except Exception:
-			print(Exception)
+		except Exception as e:
+			print(e)
 		return allposts
-
-	def printid(self):
-		pages = self.graph.get("me/feed", page=True)
-		for page in pages:
-		    print(page["data"]['id'])
