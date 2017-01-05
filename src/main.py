@@ -12,5 +12,6 @@ def run():
 	allposts = facebook.scrape(timelimit)
 	print(len(allposts))
 	db = database.DatabaseHandler("localhost","root","root","sbxcal")
+	db.setupDatabase()
 
 run()
