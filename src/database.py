@@ -45,3 +45,24 @@ class DatabaseHandler(object):
 			print(type(e))
 			print(e)
 			exit(1)
+
+	def insertPost(self,post):
+		print("Inserting/Updating post")
+		sql_insert_post = (
+			"INSERT INTO posts "
+			"(fb_post_id, message, upd_time, photo_url, poster_name, poster_id)"
+			"VALUES (%s, %s, %s, %s, %s, %s)"
+			)
+		post_info = [
+			post['id'],
+			post['message'],
+			post['timestamp'],
+			post['photo_url'],
+			post['from']['name'],
+			post['from']['id']
+			]
+		try:
+			result = self.cursor.execute(sql_insert_post,post_info)
+			self.db.commit()
+		except:
+			self.db.rollback()
