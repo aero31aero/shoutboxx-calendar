@@ -14,8 +14,7 @@ class DatabaseHandler(object):
 	def setupDatabase(self):
 		create_table_posts = """
 			CREATE TABLE IF NOT EXISTS posts (
-				post_id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-				fb_post_id VARCHAR(200) DEFAULT NULL,
+				fb_post_id VARCHAR(200) NOT NULL PRIMARY KEY,
 				message VARCHAR(5000) DEFAULT NULL,
 				upd_time DATETIME DEFAULT NULL,
 				photo_url VARCHAR(500) DEFAULT NULL,
@@ -64,5 +63,14 @@ class DatabaseHandler(object):
 		try:
 			result = self.cursor.execute(sql_insert_post,post_info)
 			self.db.commit()
-		except:
+		except pymysql.err.IntegrityError as e:
+			print("Duplicate Post. Updating existing post.")
+			self.db.rollback()
+			sql_delete_post="DELETE FROM posts WHERE fb_post_id=%s;"
+			self.cursor.execute(sql_delete_post,post['id'])
+			self.cursor.execute(sql_insert_post,post_info)
+			self.db.commit()
+		except Exception as e:
+			print(type(e))
+			print(e)
 			self.db.rollback()
