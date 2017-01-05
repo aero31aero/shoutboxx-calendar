@@ -21,6 +21,12 @@ class FacebookHandler():
 					if postdate < timelimit:
 						getposts = False
 						break
+					photo_id = post.get('object_id',None)
+					photo_url = None
+					if photo_id is not None :
+						photo_url_dict = self.graph.get(photo_id,fields="link")
+						photo_url = photo_url_dict["link"]
+					post['photo_url'] = photo_url
 					allposts.append(post)
 					print(post['updated_time']+"\t"+post['from']['name'])
 		except Exception as e:
