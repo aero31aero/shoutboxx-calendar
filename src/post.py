@@ -27,6 +27,7 @@ class FacebookHandler():
 						photo_url_dict = self.graph.get(photo_id,fields="link")
 						photo_url = photo_url_dict["link"]
 					post['photo_url'] = photo_url
+					post['timestamp'] = datetime.strptime( post['updated_time'].split('+')[0] , '%Y-%m-%dT%H:%M:%S')
 					allposts.append(post)
 					print(post['updated_time']+"\t"+post['from']['name'])
 		except Exception as e:
