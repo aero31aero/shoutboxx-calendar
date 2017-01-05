@@ -17,7 +17,7 @@ class FacebookHandler():
 				url = p['paging']['next'].split('v2.2/')[1]
 				p_posts = p['data']
 				for post in p_posts:
-					postdate = datetime.strptime(post['updated_time'].split('T')[0], '%Y-%m-%d')
+					postdate = datetime.strptime( post['updated_time'].split('+')[0] , '%Y-%m-%dT%H:%M:%S')
 					if postdate < timelimit:
 						getposts = False
 						break

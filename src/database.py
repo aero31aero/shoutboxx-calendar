@@ -1,4 +1,5 @@
 import pymysql
+from datetime import datetime
 class DatabaseHandler(object):
 	"""docstring for DatabaseHandler"""
 	def __init__(self, hostname, username, password, databasename):
@@ -74,3 +75,16 @@ class DatabaseHandler(object):
 			print(type(e))
 			print(e)
 			self.db.rollback()
+	def getLatestPostTime(self):
+		sql_select_post = "SELECT upd_time FROM posts ORDER BY upd_time DESC LIMIT 1;"
+		result = datetime.strptime("2014-12-15", '%Y-%m-%d')
+		try:
+			self.cursor.execute(sql_select_post)
+			data = self.cursor.fetchone()
+			if data is not None:
+				result = data[0]
+		except Exception as e:
+			print(type(e))
+			print(e)
+		print("Timelimit:",result)
+		return result
