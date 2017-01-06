@@ -11,26 +11,26 @@ def run():
 	groupid = '300189226756572'
 	client_secrets='client_secret.json'
 
-	event = {
-    'summary': 'Test Event',
-    'location': 'BITS Pilani, Hyderabad Campus',
-    'description': 'Insert random stuff here',
-    'start': {
-        'dateTime': '2017-01-06T20:15:00+05:30',
-        'timeZone': 'Asia/Kolkata',
-    },
-    'end': {
-        'dateTime': '2017-01-06T20:30:00+05:30',
-        'timeZone': 'Asia/Kolkata',
-    },
-    'reminders': {
-        'useDefault': False,
-        'overrides': [
-        {'method': 'email', 'minutes': 60},
-        {'method': 'popup', 'minutes': 60},
-      ],
-    },
-  }
+	# event = {
+ #    'summary': 'Test Event',
+ #    'location': 'BITS Pilani, Hyderabad Campus',
+ #    'description': 'Insert random stuff here',
+ #    'start': {
+ #        'dateTime': '2017-01-06T20:15:00+05:30',
+ #        'timeZone': 'Asia/Kolkata',
+ #    },
+ #    'end': {
+ #        'dateTime': '2017-01-06T20:30:00+05:30',
+ #        'timeZone': 'Asia/Kolkata',
+ #    },
+ #    'reminders': {
+ #        'useDefault': False,
+ #        'overrides': [
+ #        {'method': 'email', 'minutes': 60},
+ #        {'method': 'popup', 'minutes': 60},
+ #      ],
+ #    },
+ #  }
 
 	db = database.DatabaseHandler("localhost","root","root","sbxcal")
 	db.setupDatabase()
@@ -43,10 +43,12 @@ def run():
 	for eachpost in allposts:
 		try:
 			db.insertPost(eachpost)
-			if evt.isEvent(eachpost):
+			if evt.isEvent(eachpost) == True:
+				print(eachpost['from']['name']+"\n\t"+eachpost['message'])
 				newevent = evt.getEvent(eachpost)
 				db.insertEvent(newevent)
-				print(newevent)
+
+			
 		except KeyError as e:
 			# swallow the exception
 			print(type(e))
@@ -54,4 +56,6 @@ def run():
 			# pass
 	unpublished_events = db.getToBeUploadedPosts()
 	print(len(unpublished_events))
+	for eachevent in unpublished_events:
+		calendar.newEvent(evt.getGoogleEvent(eachevent))
 run()
