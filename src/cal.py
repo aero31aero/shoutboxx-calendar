@@ -24,7 +24,7 @@ class GoogleCalendar():
         #Make sure to pass client_secret as a string with path to the json file.
         self.client_secret=client_secret
 
-    def get_credentials():
+    def get_credentials(self):
         """Gets valid user credentials from storage.
 
         If nothing has been stored, or if the stored credentials are invalid,
@@ -52,12 +52,11 @@ class GoogleCalendar():
             print('Storing credentials to ' + credential_path)
         return credentials
 
-    def newEvent(event):
+    def newEvent(self,event):
 
-        credentials = get_credentials()
+        credentials = self.get_credentials()
         http = credentials.authorize(httplib2.Http())
         service = discovery.build('calendar', 'v3', http=http)
-
         #Format for event object:
         """event = {
         'summary': 'Test Event',
@@ -81,3 +80,4 @@ class GoogleCalendar():
       }"""
 
         event = service.events().insert(calendarId='primary', body=event).execute()
+        print("Event Created")
