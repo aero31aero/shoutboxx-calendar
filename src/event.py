@@ -120,9 +120,9 @@ class EventScraper():
         s = message
         n=len(s)
         v = ""
-        i = s.find("venue")
+        i = s.find("Venue")
         while( i != -1 and s[i+5] != ':' ):    #in case "venue" word comes in post
-            i = s.find("venue",i+5)
+            i = s.find("Venue",i+5)
         if(i == -1 ):                         # " : " after venue is mandatory
             self.venue = None
         else:
@@ -175,6 +175,6 @@ Venue: Z103
 print(events.isEvent(post))
 print(events.date)
 print(events.time)
-print(events.month)
+print(events.DateTime)
 det = events.getEvent(post)
 print(det)
