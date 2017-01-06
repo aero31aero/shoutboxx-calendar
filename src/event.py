@@ -5,25 +5,40 @@
 #for post in posts:
 #    if events.isEvent(post):
 #        calendar.newEvent(events.getEvent(post))
+import re
 from datetime import datetime
 class EventScraper():
     def __init__(self):
-        self.date = 0
-        self.month = ""
         self.time = 0
+        self.month = ""
+        self.date = 0
+        self.DateTime = 0
         self.title = ""
         self.venue = ""
+        self.year = 0
 
     def setTitle(self,message):
         s = message
         n=len(s)
         i=0
+        t = ""
         while ( i<n and (s[i]==' ' or s[i]=='!' or s[i]=='*' or s[i]=='#' ) ):
             i += 1
         if(i<n):
             while ( i<n and s[i]!='!' and s[i]!='*' and s[i]!='#' and s[i]!='.' ):
-                self.title += s[i]
+                t += s[i]
                 i += 1
+            self.title = t
+
+    def getYear(self,message):
+        s = message
+        n = len(s)
+        a = re.compile(r'(2[0-9]{3})')
+        b = a.search(s)
+        if b is None:
+            self.year = datetime.today().year
+        else:
+            self.year = b.group()
 
     def setTime(self,message):
         s = message
@@ -31,7 +46,7 @@ class EventScraper():
         i = s.find("time")
         while( i != -1 and  s[i+4] != ':'):    #in case "time" word comes in post
             i = s.find("time",i+4)
-        if(i == -1 ):                         # " : " after time is mandatory
+        if i == -1 :                         # " : " after time is mandatory
             self.time = None
         else:
             time_start = i
@@ -59,6 +74,7 @@ class EventScraper():
 
     def setMonth(self,date_start,message):
         new_message = message[date_start:].split(' ')
+        #list_month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
         list_month = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec']
         month_yn = [i in new_message for i in list_month]
         month = 0
@@ -69,9 +85,9 @@ class EventScraper():
                 break
         if month == 0:
             self.month = None
+        return month
 
-
-    def setDateAndMonth(self,message):
+    def setDateTime(self,message):
         s = message
         n=len(s)
         date_start = 0
@@ -92,7 +108,13 @@ class EventScraper():
                     date_number *= 10
                     date_number += ord(s[i+1])-48
                 self.date = date_number
-                self.setMonth(date_start,message)
+                month = self.setMonth(date_start,message)
+                time = self.setTime(message)
+                if self.time is not None and self.month is not None:
+                    self.getYear(message)
+                    self.DateTime = datetime.strptime(str(date_number)+'-'+str(month)+'-'+str(self.year)+'T'+self.time,'%d-%m-%YT%H:%M:%S')
+                else:
+                    self.DateTime = None
 
     def setVenue(self,message):
         s = message
@@ -116,19 +138,15 @@ class EventScraper():
         if message is None:
             return False
 
-        message = message.lower()
+        #message = message.lower()
 
-        if len(self.title)==0:
-            self.setTitle(message)
-            if(self.title is None):
-                return False
-      
-        self.setDateAndMonth(message)
-        if(self.date is None):
+        self.setTitle(message)
+        if(self.title is None):
             return False
 
-        self.setTime(message)
-        if(self.time is None):
+        message = message.lower()
+        self.setDateTime(message)
+        if self.DateTime is None :
             return False
 
         return True
@@ -138,9 +156,9 @@ class EventScraper():
         if self.isEvent(post) is True:
             self.setVenue(post['message'])
             details['title'] = (self.title)
-            details['date'] = (self.date)
-            details['month'] = (self.month)
-            details['time'] = (self.time)
+            details['datetime'] = (self.DateTime)
+            #details['month'] = (self.month)
+            #details['time'] = (self.time)
             details['venue'] = (self.venue)
             return details
 
@@ -155,5 +173,8 @@ Time: 5:30 PM
 Venue: Z103
 ---"""
 print(events.isEvent(post))
+print(events.date)
+print(events.time)
+print(events.month)
 det = events.getEvent(post)
 print(det)
