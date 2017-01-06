@@ -93,7 +93,7 @@ class DatabaseHandler(object):
 			sql_update_event=("UPDATE events "
 				"SET title=%s,starttime=%s,venue=%s,uploaded=0 "
 				"WHERE fb_post_id=%s;")
-			self.cursor.execute(sql_update_event,event)
+			self.cursor.execute(sql_update_event,event_info)
 			self.db.commit()
 		except Exception as e:
 			print(type(e))
@@ -121,6 +121,7 @@ class DatabaseHandler(object):
 			data = self.cursor.fetchall()
 			if data is not None:
 				for row in data:
+					print(row)
 					results.append(row)
 		except Exception as e:
 			print(type(e))

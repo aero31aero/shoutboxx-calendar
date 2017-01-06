@@ -6,7 +6,7 @@
 #    if events.isEvent(post):
 #        calendar.newEvent(events.getEvent(post))
 import re
-from datetime import datetime
+from datetime import datetime,timedelta
 class EventScraper():
 	def __init__(self):
 		self.time = 0
@@ -148,19 +148,34 @@ class EventScraper():
 		self.setDateTime(message)
 		if self.DateTime is None :
 			return False
-
 		return True
 
 	def getEvent(self,post):
 		details = {}
 		if self.isEvent(post) is True:
 			self.setVenue(post['message'])
+			details['id'] = post['id']
 			details['title'] = (self.title)
 			details['datetime'] = (self.DateTime)
 			#details['month'] = (self.month)
 			#details['time'] = (self.time)
 			details['venue'] = (self.venue)
 		return details
+	def getGoogleEvent(self,array):
+		delta = timedelta(hours=1)
+		googleevent = {}
+		googleevent['summary'] = array[2]
+		googleevent['description'] = "https://facebook.com/"+array[0]
+		googleevent['start'] = {}
+		googleevent['start']['dateTime'] = array[3].isoformat('T')+"+00:00"
+		googleevent['end'] = {}
+		newtime = array[3] + delta
+		googleevent['end']['dateTime'] = newtime.isoformat('T')+"+00:00"
+		googleevent['location'] = array[4]
+		return googleevent
+
+
+
 
 # TO CHECK IF WORKING.
 # events = EventScraper()
