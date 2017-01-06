@@ -26,4 +26,6 @@ def run():
 			print(type(e))
 			print(e)
 			# pass
+	unpublished_events = db.getToBeUploadedPosts()
+	print(len(unpublished_events))
 run()

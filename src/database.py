@@ -112,3 +112,17 @@ class DatabaseHandler(object):
 			print(e)
 		print("Timelimit:",result)
 		return result
+	def getToBeUploadedPosts(self):
+	   sql_select_event = "SELECT * from events WHERE uploaded=0;"
+	   # sql_select_event = "SELECT * from posts;"
+	   results = []
+	   try:
+			   self.cursor.execute(sql_select_event)
+			   data = self.cursor.fetchall()
+			   if data is not None:
+				   for row in data:
+						results.append(row)
+	   except Exception as e:
+			   print(type(e))
+			   print(e)
+	   return results
