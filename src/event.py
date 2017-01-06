@@ -109,6 +109,7 @@ class EventScraper():
                 v+=s[i]
                 i=i+1
             self.venue = v
+
     def isEvent(self, post):
         message = post.get('message',None)
 
@@ -117,10 +118,11 @@ class EventScraper():
 
         message = message.lower()
 
-        self.setTitle(message)
-        if(self.title is None):
-            return False
-
+        if len(self.title)==0:
+            self.setTitle(message)
+            if(self.title is None):
+                return False
+      
         self.setDateAndMonth(message)
         if(self.date is None):
             return False
@@ -145,7 +147,13 @@ class EventScraper():
 # TO CHECK IF WORKING.
 events = EventScraper()
 post = {}
-post['message'] = "*****Talk for Chemical and Mechanical students***** A gentle reminder to all the Chemical and mechanical students for the talk on 3D printing of metals by Prof. Upadrasta Ramamurty, CSIR- Shanti Sharp Bhatnagar award recipient and one of the notable researchers in Material Science. Venue: Seminar Hall, G-block . Date: 24 Nov Time: 4pm"
+post['message'] = """**Event Title**
+Here goes the worth much as crap description that we'll discard anyway. Important information follows below:
+---
+Date: 27 Jan 2017
+Time: 5:30 PM
+Venue: Z103
+---"""
 print(events.isEvent(post))
 det = events.getEvent(post)
 print(det)
