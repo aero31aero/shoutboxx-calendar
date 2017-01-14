@@ -3,14 +3,19 @@ import post
 import database
 import cal
 import event
+from config import config
 
 import os
 
 def run():
-	apitoken = os.environ['FACEPY_TOKEN']
-	groupid = '300189226756572'
+	apitoken = config['facebook_token']
+	groupid = config['groupid']
 	client_secrets='client_secret.json'
-	db = database.DatabaseHandler("localhost","root","root","sbxcal")
+	db = database.DatabaseHandler(
+		config['mysql']['hostname'],
+		config['mysql']['username'],
+		config['mysql']['password'],
+		config['mysql']['databasename'])
 	db.setupDatabase()
 	calendar = cal.GoogleCalendar(client_secrets)
 	# calendar.newEvent(event)
