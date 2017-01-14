@@ -79,5 +79,5 @@ class GoogleCalendar():
         },
       }"""
 
-        event = service.events().insert(calendarId='bits-pilani.ac.in_d17s7fo9ou7p93pntr9eghvruo@group.calendar.google.com', body=event).execute()
+        event = service.events().insert(calendarId='primary', body=event).execute()
         print("Event Created")
