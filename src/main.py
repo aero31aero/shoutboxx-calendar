@@ -26,7 +26,7 @@ def run():
 				newevent = evt.getEvent(eachpost)
 				db.insertEvent(newevent)
 
-			
+
 		except KeyError as e:
 			# swallow the exception
 			print(type(e))
@@ -36,6 +36,7 @@ def run():
 	print(len(unpublished_events))
 	for eachevent in unpublished_events:
 		postedevent = calendar.newEvent(evt.getGoogleEvent(eachevent))
+		print(postedevent)
 		if postedevent['uploaded'] == True:
 			db.markAsUploaded(postedevent)
 run()
