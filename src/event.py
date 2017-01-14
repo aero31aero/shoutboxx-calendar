@@ -131,6 +131,7 @@ class EventScraper():
 		newtime = array[3] + delta
 		googleevent['end']['dateTime'] = newtime.isoformat('T')+"+00:00"
 		googleevent['location'] = array[4]
+		googleevent['attendees'] = [{'email':'bits-pilani.ac.in_d17s7fo9ou7p93pntr9eghvruo@group.calendar.google.com'}]
 		return googleevent
 
 
