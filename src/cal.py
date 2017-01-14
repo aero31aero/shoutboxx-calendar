@@ -82,7 +82,7 @@ class GoogleCalendar():
         event = service.events().insert(calendarId='primary', body=event).execute()
         event1 = {}
         event1['google_event_id'] = event['htmlLink'][42:]
-        event1['fb_post_id'] = event['description']
+        event1['fb_post_id'] = event['description'].split("facebook.com/")[1]
         event1['uploaded'] = True
         return event1
         print("Event Created")

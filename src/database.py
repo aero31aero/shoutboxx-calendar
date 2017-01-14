@@ -128,12 +128,17 @@ class DatabaseHandler(object):
 			print(e)
 		return results
 	def markAsUploaded(self,uploadedevent):
-		sql_update_event = ("UPDATE events",
-			"set uploaded=1, google_event_id=%s",
-			"where fb_post_id=%s")
-		event_info=[uploadedevent['fb_post_id'],uploadedevent['google_event_id']]
+		sql_update_event = ("UPDATE events "
+			"set uploaded=1, google_event_id=%s"
+			"where fb_post_id=%s;")
+		event_info = [
+			uploadedevent['fb_post_id'],
+			uploadedevent['google_event_id']
+			]
 		try:
+			print("Event Info",event_info)
 			self.cursor.execute(sql_update_event,event_info)
 			self.db.commit()
 		except Exception as e:
+			self.db.rollback()
 			print("Couldn't update event. Database is now inconsistent with Google Calendar")
