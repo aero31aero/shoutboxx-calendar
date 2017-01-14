@@ -121,15 +121,19 @@ class EventScraper():
 			return details
 
 	def getGoogleEvent(self,array):
+		ist_delta = timedelta(hours=5,minutes=30)
 		delta = timedelta(hours=1)
+		print("INITTIME:",array[3])
+		starttime = array[3] - ist_delta
+		print("NEWTIME:",starttime)
 		googleevent = {}
 		googleevent['summary'] = array[2]
 		googleevent['description'] = "https://facebook.com/"+array[0]
 		googleevent['start'] = {}
-		googleevent['start']['dateTime'] = array[3].isoformat('T')+"+00:00"
+		googleevent['start']['dateTime'] = starttime.isoformat('T')+"+00:00"
 		googleevent['end'] = {}
-		newtime = array[3] + delta
-		googleevent['end']['dateTime'] = newtime.isoformat('T')+"+00:00"
+		endtime = starttime + delta
+		googleevent['end']['dateTime'] = endtime.isoformat('T')+"+00:00"
 		googleevent['location'] = array[4]
 		googleevent['attendees'] = [{'email':'bits-pilani.ac.in_d17s7fo9ou7p93pntr9eghvruo@group.calendar.google.com'}]
 		return googleevent

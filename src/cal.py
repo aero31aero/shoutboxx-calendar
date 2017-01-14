@@ -80,4 +80,5 @@ class GoogleCalendar():
       }"""
 
         event = service.events().insert(calendarId='primary', body=event).execute()
+        print(event)
         print("Event Created")
