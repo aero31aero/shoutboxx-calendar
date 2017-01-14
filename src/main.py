@@ -36,6 +36,6 @@ def run():
 	print(len(unpublished_events))
 	for eachevent in unpublished_events:
 		postedevent = calendar.newEvent(evt.getGoogleEvent(eachevent))
-		if postedevent.uploaded == True:
+		if postedevent['uploaded'] == True:
 			db.markAsUploaded(postedevent)
 run()
