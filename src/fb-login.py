@@ -20,7 +20,20 @@ class Facebook():
         usock = self.opener.open('http://www.facebook.com')
         usock = self.opener.open(url, data.encode())
         usock = self.opener.open('https://developers.facebook.com/tools/explorer/')
+        htmlExtract = str(usock.read())
+        count=0
+        find="accessToken"
+        for z in re.finditer(find,htmlExtract):
+            count+=1
+            if(count==2):
+                mark=z.start()
 
+        htmlMod=htmlExtract[mark+14:]
+        for a in htmlMod:
+            if(a=='"'):
+                break
+            else:
+                print(a,end="")
 
-f = Facebook("email", "id")
+f = Facebook("email", "pass")
 f.login()
