@@ -20,7 +20,7 @@ class Facebook():
         usock = self.opener.open('http://www.facebook.com')
         usock = self.opener.open(url, data.encode())
         usock = self.opener.open('https://developers.facebook.com/tools/explorer/')
+        self.page = usock.read()
 
-
-f = Facebook("email", "id")
-f.login()
+    def getToken(self):
+        return self.page

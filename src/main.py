@@ -3,12 +3,18 @@ import post
 import database
 import cal
 import event
+import fblogin
 from config import config
 
 import os
 
 def run():
-	apitoken = config['facebook_token']
+
+	email = config['email']
+	password = config['password']
+	f = new fblogin.Facebook(email,password)
+	f.login()
+	apitoken = f.getToken()
 	groupid = config['groupid']
 	client_secrets='client_secret.json'
 	db = database.DatabaseHandler(
