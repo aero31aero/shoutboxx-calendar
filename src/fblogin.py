@@ -21,6 +21,23 @@ class Facebook():
         usock = self.opener.open(url, data.encode())
         usock = self.opener.open('https://developers.facebook.com/tools/explorer/')
         self.page = usock.read()
+        htmlExtract = str(usock.read())
+        
 
     def getToken(self):
-        return self.page
+        count=0
+        find="accessToken"
+        for z in re.finditer(find,self.page):
+            count+=1
+            if(count==2):
+                mark=z.start()
+
+        htmlMod=htmlExtract[mark+14:]
+        token=None
+        for a in htmlMod:
+            if(a=='"'):
+                break
+            else:
+                token=a
+                return token;
+        return token
