@@ -13,8 +13,7 @@ def run():
 	email = config['email']
 	password = config['password']
 	f = new fblogin.Facebook(email,password)
-	f.login()
-	apitoken = f.getToken()
+	apitoken = f.loginAndGetToken()
 	groupid = config['groupid']
 	client_secrets='client_secret.json'
 	db = database.DatabaseHandler(
