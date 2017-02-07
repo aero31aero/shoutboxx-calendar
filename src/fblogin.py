@@ -28,10 +28,11 @@ class Facebook():
                 mark=z.start()
 
         htmlMod=htmlExtract[mark+14:]
-        token=[]
+        token=""
         for a in htmlMod:
             if(a=='"'):
                 break
             else:
-                token.append(a)
+                token+=a
+
         return token

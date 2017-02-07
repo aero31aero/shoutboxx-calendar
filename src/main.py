@@ -12,7 +12,7 @@ def run():
 
 	email = config['email']
 	password = config['password']
-	f = new fblogin.Facebook(email,password)
+	f = fblogin.Facebook(email,password)
 	apitoken = f.loginAndGetToken()
 	groupid = config['groupid']
 	client_secrets='client_secret.json'
