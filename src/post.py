@@ -18,7 +18,7 @@ class FacebookHandler():
 				p_posts = p['data']
 				for post in p_posts:
 					postdate = datetime.strptime( post['updated_time'].split('+')[0] , '%Y-%m-%dT%H:%M:%S')
-					if postdate < timelimit:
+					if postdate <= timelimit:
 						getposts = False
 						break
 					photo_id = post.get('object_id',None)

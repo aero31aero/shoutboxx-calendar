@@ -121,7 +121,7 @@ class DatabaseHandler(object):
 			data = self.cursor.fetchall()
 			if data is not None:
 				for row in data:
-					print(row)
+					# print(row)
 					results.append(row)
 		except Exception as e:
 			print(type(e))

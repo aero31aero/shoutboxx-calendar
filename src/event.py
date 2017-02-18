@@ -123,9 +123,9 @@ class EventScraper():
 	def getGoogleEvent(self,array):
 		ist_delta = timedelta(hours=5,minutes=30)
 		delta = timedelta(hours=1)
-		print("INITTIME:",array[3])
+		# print("INITTIME:",array[3])
 		starttime = array[3] - ist_delta
-		print("NEWTIME:",starttime)
+		# print("NEWTIME:",starttime)
 		googleevent = {}
 		googleevent['summary'] = array[2]
 		googleevent['description'] = "https://facebook.com/"+array[0]
