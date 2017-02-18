@@ -132,11 +132,11 @@ class DatabaseHandler(object):
 			"set uploaded=1, google_event_id=%s"
 			"where fb_post_id=%s;")
 		event_info = [
-			uploadedevent['fb_post_id'],
-			uploadedevent['google_event_id']
+			uploadedevent['google_event_id'],
+			uploadedevent['fb_post_id']
 			]
 		try:
-			print("Event Info",event_info)
+			print("Updated Post in Database. Event Info:",event_info)
 			self.cursor.execute(sql_update_event,event_info)
 			self.db.commit()
 		except Exception as e:

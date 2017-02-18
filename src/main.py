@@ -48,5 +48,6 @@ def run():
 		postedevent = calendar.newEvent(evt.getGoogleEvent(eachevent))
 		print(postedevent)
 		if postedevent['uploaded'] == True:
+			print("Debug: Calling db.markAsUploaded()")
 			db.markAsUploaded(postedevent)
 run()
