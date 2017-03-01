@@ -136,6 +136,13 @@ class EventScraper():
 		googleevent['end']['dateTime'] = endtime.isoformat('T')+"+00:00"
 		googleevent['location'] = array[4]
 		googleevent['attendees'] = [{'email':'bits-pilani.ac.in_d17s7fo9ou7p93pntr9eghvruo@group.calendar.google.com'}]
+		googleevent['reminders'] = {
+									'useDefault': False,
+        							'overrides': [
+        							{'method': 'email', 'minutes': 120},
+									{'method': 'popup', 'minutes': 120},
+      								],
+    								}
 		return googleevent
 
 
