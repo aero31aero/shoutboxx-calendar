@@ -1,9 +1,14 @@
 # shoutboxx-calendar
-[incomplete] Crux Winter Project for Facebook Scraping for Events
+
+Crux Winter Project for Facebook Scraping for Events
 
 ## Checklist
 
-[*] Init Repository for Python Code.
-[] Facebook Scraping using Facepy.
-[] Google Calendar Support.
-[] Abstracting out the post parser.
+- [x] Init Repository for Python Code.
+- [x] Facebook Scraping using Facepy.
+- [x] Google Calendar Support.
+- [x] Abstracting out the post parser.
+
+## Documentation
+
+We did a bad job documenting this, but since the codebase is pretty simple, for usage intructions, open the files and RTFS!
